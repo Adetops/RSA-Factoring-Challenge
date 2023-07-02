@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int trial_div(long int n);
 
@@ -12,7 +13,7 @@ int trial_div(long int n)
 
 	if (n % 2 == 0)
 	{
-		printf("%lu = %lu * %i\n", n, n / 2, 2);
+		printf("%lu=%lu*%i\n", n, n / 2, 2);
 		return 0;
 	}
 
@@ -21,7 +22,7 @@ int trial_div(long int n)
 	{
 		if (n % f == 0)
 		{
-			printf("%lu = %lu * %lu\n", n, n / f, f);
+			printf("%lu=%lu*%lu\n", n, n / f, f);
 			return (0);
 		}
 		else
@@ -29,7 +30,7 @@ int trial_div(long int n)
 			f += 2;
 		}
 	}
-	printf("%lu = %lu * %i\n", n, n, 1);
+	printf("%lu =%lu*%i\n", n, n, 1);
 	return (0);
 }
 
@@ -39,17 +40,26 @@ int trial_div(long int n)
  */
 int main(int argc, char **argv)
 {
-	int fd = open(argv[1], "r");
+	(void) argc;
+	FILE *file;
+	char line[100];
+	long int n, i = 0;
 
-	if (argc != 2)
-		return (0);
+	file = fopen(argv[1], "r");
 
-	line = readline(fd);
-	while (line != '\0')
+	if (file == NULL)
 	{
-		trial_div(n);
-		line = readline(fd);
+		printf("Failed to open the file.\n");
+		return 1;
 	}
+
+	while (fgets(line, sizeof(line), file) != NULL)
+	{
+		n = atoi(line);
+		trial_div(n);
+		i++;
+	}
+	fclose(file);
 
 	return (0);
 }

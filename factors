@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from factor import *
+from factor import trial_div, print_factors
 
 if __name__ == '__main__':
-	print(unix_time(print_factors))
+	print(print_factors())
